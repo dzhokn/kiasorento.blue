@@ -295,7 +295,6 @@
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 0;
       font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -343,7 +342,6 @@
     .detail-split {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0;
       align-items: center;
       min-height: 70vh;
     }
@@ -368,7 +366,6 @@
     .alt-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0;
       align-items: center;
       min-height: 50vh;
       margin-bottom: 2px;
@@ -525,6 +522,13 @@
       background: rgba(255,255,255,0.1);
       outline: 2px solid var(--sapphire-bright);
     }
+
+    /* ── Lightbox triggers ────────────────────────────── */
+    [data-lightbox] { cursor: zoom-in; }
+
+    /* ── Section modifiers ────────────────────────────── */
+    .section--compact { padding-bottom: 32px; }
+    .section__title--sm { font-size: 1.3rem; }
 
     /* ── Red accent line ───────────────────────────────── */
     .accent-line {
@@ -759,7 +763,7 @@
 
     <!-- ═══ S3: EXTERIOR - "Forged in Blue" ═══ -->
     <section class="section--wide">
-      <div class="section" style="padding-bottom:32px">
+      <div class="section section--compact">
         <p class="section__label reveal">Exterior</p>
         <h2 class="section__title reveal">Forged in Blue</h2>
         <p class="section__text reveal">Blacked-out grille, gloss-black accents, custom front lip, and the Samurai badge - every angle is intentional.</p>
@@ -869,7 +873,7 @@
 
     <!-- ═══ S6: INTERIOR ═══ -->
     <section class="section--wide">
-      <div class="section" style="padding-bottom:32px">
+      <div class="section section--compact">
         <p class="section__label reveal">Interior</p>
         <h2 class="section__title reveal">Command Center</h2>
         <p class="section__text reveal">Where the driver meets the machine. Dual screens, ambient lighting, and a panoramic view of the sky.</p>
@@ -892,7 +896,7 @@
         </div>
         <div class="alt-row__content">
           <div class="accent-line"></div>
-          <h3 class="section__title" style="font-size:1.3rem">The Dashboard</h3>
+          <h3 class="section__title section__title--sm">The Dashboard</h3>
           <p class="section__text">Dual 12.3-inch displays, clean architecture, driver-focused layout.</p>
         </div>
       </div>
@@ -914,7 +918,7 @@
         </div>
         <div class="alt-row__content">
           <div class="accent-line"></div>
-          <h3 class="section__title" style="font-size:1.3rem">Driver's View</h3>
+          <h3 class="section__title section__title--sm">Driver's View</h3>
           <p class="section__text">Everything within reach, nothing in the way.</p>
         </div>
       </div>
@@ -936,7 +940,7 @@
         </div>
         <div class="alt-row__content">
           <div class="accent-line"></div>
-          <h3 class="section__title" style="font-size:1.3rem">Dual Screens</h3>
+          <h3 class="section__title section__title--sm">Dual Screens</h3>
           <p class="section__text">Seamless digital cockpit - navigation, media, and vehicle data at a glance.</p>
         </div>
       </div>
@@ -958,7 +962,7 @@
         </div>
         <div class="alt-row__content">
           <div class="accent-line"></div>
-          <h3 class="section__title" style="font-size:1.3rem">Open Sky</h3>
+          <h3 class="section__title section__title--sm">Open Sky</h3>
           <p class="section__text">Panoramic sunroof stretches the horizon overhead.</p>
         </div>
       </div>
@@ -980,7 +984,7 @@
         </div>
         <div class="alt-row__content">
           <div class="accent-line"></div>
-          <h3 class="section__title" style="font-size:1.3rem">Ambient Glow</h3>
+          <h3 class="section__title section__title--sm">Ambient Glow</h3>
           <p class="section__text">Blue ambient lighting flows through the cabin - matching the exterior, completing the identity.</p>
         </div>
       </div>
@@ -988,7 +992,7 @@
 
     <!-- ═══ S7: IN THE WILD ═══ -->
     <section class="section--wide">
-      <div class="section" style="padding-bottom:32px">
+      <div class="section section--compact">
         <p class="section__label reveal">In the Wild</p>
         <h2 class="section__title reveal">Natural Habitat</h2>
         <p class="section__text reveal">Sapphire blue against ancient green. The Sorento was made for more than pavement.</p>
@@ -1044,20 +1048,20 @@
 
     <!-- ═══ S8: THE GARAGE ═══ -->
     <section class="section--wide" style="background:var(--surface)">
-      <div class="section" style="padding-bottom:32px">
+      <div class="section section--compact">
         <p class="section__label reveal">The Garage</p>
         <h2 class="section__title reveal">Good Company</h2>
       </div>
-      <div class="panel reveal" data-lightbox="img/gallery/duo_profile_1280w.webp">
-        <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAwCdASoUAAsAPzmEuVOvKKWisAgB4CcJYgC06C0Hml8AAP7lNF0JlkpcHkFAmyKnGORVg6m7wvkiGckBZrtSAt667RRtSLarFeoAAAA=')">
+      <div class="panel reveal" data-lightbox="img/gallery/duo_profile_1920w.webp">
+        <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAAsAPzmGuVOvKSWisAgB4CcJQBbZA85ouRtqg8AAAO1XSJnQQAreEgyhGR7dnikfvazs46R59yzngAAAAA==')">
           <picture>
             <source type="image/webp"
-                    srcset="img/gallery/duo_profile_320w.webp 320w, img/gallery/duo_profile_400w.webp 400w, img/gallery/duo_profile_800w.webp 800w, img/gallery/duo_profile_1280w.webp 1280w"
+                    srcset="img/gallery/duo_profile_320w.webp 320w, img/gallery/duo_profile_400w.webp 400w, img/gallery/duo_profile_800w.webp 800w, img/gallery/duo_profile_1280w.webp 1280w, img/gallery/duo_profile_1920w.webp 1920w"
                     sizes="100vw">
             <img class="panel__img blur-up" loading="lazy"
-                 src="img/gallery/duo_profile_1280w.jpg"
+                 src="img/gallery/duo_profile_1920w.jpg"
                  alt="Yellow Chevrolet Camaro ZL1 and Blue Kia Sorento Samurai Edition side by side in profile, park setting"
-                 width="1280" height="851">
+                 width="1920" height="1080">
           </picture>
         </div>
       </div>

@@ -26,7 +26,6 @@
         })
       : Promise.resolve();
 
-    // Dismiss when hero loads OR after 3s, whichever first
     Promise.race([heroLoad, timeout]).then(() => {
       preloader.classList.add('preloader--hidden');
       document.body.classList.add('loaded');
@@ -34,86 +33,74 @@
     });
   }
 
-  // ── Scroll Reveal ──────────────────────────────────────────
+  // ── Scroll Reveal + Blur-Up (shared observer) ─────────────
   function initScrollReveal() {
     if (prefersReducedMotion) {
-      // Show everything immediately
       document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+      document.querySelectorAll('.blur-up').forEach(img => img.classList.add('loaded'));
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+
+          if (el.classList.contains('reveal')) {
+            el.classList.add('visible');
           }
+
+          if (el.classList.contains('blur-up')) {
+            if (el.complete) {
+              el.classList.add('loaded');
+            } else {
+              el.addEventListener('load', () => el.classList.add('loaded'), { once: true });
+              el.addEventListener('error', () => el.classList.add('loaded'), { once: true });
+            }
+          }
+
+          observer.unobserve(el);
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal, .blur-up').forEach(el => observer.observe(el));
   }
 
-  // ── Hero Parallax ─────────────────────────────────────────
-  function initParallax() {
-    if (prefersReducedMotion || isTouchDevice) return;
-
+  // ── Scroll Effects (parallax + indicator, single listener) ─
+  function initScrollEffects() {
     const hero = document.querySelector('.hero');
-    const heroImg = document.querySelector('.hero__img');
-    if (!hero || !heroImg) return;
+    const heroImg = (!prefersReducedMotion && !isTouchDevice) ? document.querySelector('.hero__img-wrap--desktop .hero__img') : null;
+    const indicator = document.querySelector('.hero__scroll');
+    if (!hero && !indicator) return;
 
+    const heroH = hero ? hero.offsetHeight : 0;
+    let indicatorHidden = false;
     let ticking = false;
 
-    function updateParallax() {
+    function onScroll() {
       const scrollY = window.scrollY;
-      const heroH = hero.offsetHeight;
-      if (scrollY < heroH) {
+
+      if (heroImg && scrollY < heroH) {
         heroImg.style.transform = `translate3d(0, ${scrollY * 0.3}px, 0) scale(1.05)`;
       }
+
+      if (indicator && !indicatorHidden && scrollY > 100) {
+        indicator.style.opacity = '0';
+        indicatorHidden = true;
+      }
+
       ticking = false;
     }
 
     window.addEventListener('scroll', () => {
       if (!ticking) {
-        requestAnimationFrame(updateParallax);
+        requestAnimationFrame(onScroll);
         ticking = true;
       }
     }, { passive: true });
-  }
-
-  // ── Image Blur-Up (Lazy Load) ─────────────────────────────
-  function initBlurUp() {
-    const images = document.querySelectorAll('.blur-up');
-
-    if (prefersReducedMotion) {
-      images.forEach(img => { img.style.opacity = '1'; });
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            // The actual src/srcset is already set via <picture>; loading="lazy" handles it.
-            // We just handle the opacity transition when it loads.
-            if (img.complete) {
-              img.classList.add('loaded');
-            } else {
-              img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
-              img.addEventListener('error', () => img.classList.add('loaded'), { once: true });
-            }
-            observer.unobserve(img);
-          }
-        });
-      },
-      { rootMargin: '200px' }
-    );
-
-    images.forEach(img => observer.observe(img));
   }
 
   // ── Lightbox ──────────────────────────────────────────────
@@ -131,10 +118,11 @@
 
     const lbImg = lightbox.querySelector('.lightbox__img');
     const closeBtn = lightbox.querySelector('.lightbox__close');
-
+    let lastTrigger = null;
     let touchStartY = 0;
 
-    function openLightbox(src, alt) {
+    function openLightbox(src, alt, trigger) {
+      lastTrigger = trigger;
       lbImg.src = src;
       lbImg.alt = alt;
       lightbox.classList.add('active');
@@ -148,19 +136,31 @@
       lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
       lbImg.src = '';
+      if (lastTrigger) {
+        lastTrigger.focus();
+        lastTrigger = null;
+      }
     }
 
-    // Click on gallery images
+    // Gallery triggers - add keyboard accessibility
     document.querySelectorAll('[data-lightbox]').forEach(el => {
-      el.style.cursor = 'zoom-in';
-      el.addEventListener('click', () => {
-        const fullSrc = el.dataset.lightbox;
-        const alt = el.querySelector('img')?.alt || el.alt || '';
-        openLightbox(fullSrc, alt);
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-label', (el.querySelector('img')?.alt || '') + ' - click to enlarge');
+
+      function activate() {
+        openLightbox(el.dataset.lightbox, el.querySelector('img')?.alt || '', el);
+      }
+
+      el.addEventListener('click', activate);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          activate();
+        }
       });
     });
 
-    // Close handlers
     closeBtn.addEventListener('click', closeLightbox);
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) closeLightbox();
@@ -171,7 +171,6 @@
       }
     });
 
-    // Swipe-down to close on touch
     lightbox.addEventListener('touchstart', (e) => {
       touchStartY = e.touches[0].clientY;
     }, { passive: true });
@@ -182,27 +181,11 @@
     }, { passive: true });
   }
 
-  // ── Scroll indicator hide ─────────────────────────────────
-  function initScrollIndicator() {
-    const indicator = document.querySelector('.hero__scroll');
-    if (!indicator) return;
-
-    let hidden = false;
-    window.addEventListener('scroll', () => {
-      if (!hidden && window.scrollY > 100) {
-        indicator.style.opacity = '0';
-        hidden = true;
-      }
-    }, { passive: true });
-  }
-
   // ── Init ───────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     initPreloader();
     initScrollReveal();
-    initParallax();
-    initBlurUp();
+    initScrollEffects();
     initLightbox();
-    initScrollIndicator();
   });
 })();
