@@ -43,6 +43,7 @@
         imagesizes="100vw"
         media="(max-width: 768px)">
 
+
   <!-- Preload primary font -->
   <link rel="preload" as="font" href="fonts/inter-latin-var.woff2" type="font/woff2" crossorigin>
 
@@ -402,23 +403,6 @@
       display: block;
     }
 
-    /* ── S8: Mood ──────────────────────────────────────── */
-    .mood {
-      display: flex;
-      justify-content: center;
-      padding: 80px 24px;
-      background: var(--surface);
-    }
-    .mood__img-wrap {
-      max-width: 520px;
-      width: 100%;
-    }
-    .mood__img-wrap img {
-      width: 100%;
-      max-height: 80vh;
-      object-fit: contain;
-    }
-
     /* ── S9: Specs ─────────────────────────────────────── */
     .specs-grid {
       display: grid;
@@ -676,12 +660,6 @@
       }
       .spec-bar__item:last-child { border-bottom: none; }
 
-      .mood { padding: 48px 16px; }
-      .mood__img-wrap { max-width: 100%; }
-      .mood__img-wrap img {
-        max-height: 70vh;
-      }
-
       .panel__caption {
         padding: 32px 16px 20px;
       }
@@ -746,15 +724,15 @@
                fetchpriority="high">
         </picture>
       </div>
-      <div class="hero__img-wrap img-wrap hero__img-wrap--mobile" style="background-image:url('data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAACwBQCdASoUACQAPzmAuFWvJyUjMBVdUeAnCWIAsswuc4kt6dLtvyAoMu2wjWzjbiarnR5RHwAA/tNyoRBc202PGiAwHjoYqAfuW+uffZFUt2hwujego8UDynpadaff/0xnbw22afoCYSDC0gWfwo2OppAcR9ci92deoSMNViQGQyFxzaivE3nTd99Sd+EqRWIYLtZrKT6TkEvhI+O60IjVV0AAAA==')">
+      <div class="hero__img-wrap img-wrap hero__img-wrap--mobile" style="background-image:url('data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAADwBACdASoUAB4APzmKu1YvKSWjsBgIAeAnCWoAsOwGAjxqsDE5FR1LytUm+BzoZsAA/GX13HXm9Ix92NWsjT5G7qhjofHWFDUjp9ZrBJpHCa60YZTTAGYzwQOJiaXzZGX/q5Y+RovsIT3MCGkx6EUv27DnWk2BpyV2g0i9oPuvPHx8kfnfpEjRjshyZ06HV9Ft26EjkRurQoAA')">
         <picture>
           <source type="image/webp"
                   srcset="img/hero/hero_mobile_480w.webp 480w, img/hero/hero_mobile_640w.webp 640w, img/hero/hero_mobile_960w.webp 960w"
                   sizes="100vw">
           <img class="hero__img blur-up"
-               src="img/hero/hero_mobile_640w.webp"
-               alt="Blue Kia Sorento Samurai Edition front view with DRL lights glowing on an overcast day"
-               width="640" height="1138"
+               src="img/hero/hero_mobile_960w.jpg"
+               alt="Blue Kia Sorento Samurai Edition on park grass with golden hour light and tall trees"
+               width="640" height="963"
                fetchpriority="high">
         </picture>
       </div>
@@ -867,15 +845,15 @@
     <!-- ═══ S4: DETAILS ═══ -->
     <section class="section--wide">
       <div class="detail-split">
-        <div class="detail-split__img reveal" data-lightbox="img/gallery/wheel_detail_1280w.webp">
-          <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAACwAwCdASoUAA0APzmGuVOvKSWisAgB4CcJZACdMoHggAo3ACtqAAD+4f5+OzH6oqQhtEb3x2bJGe+l1YzfBWCKmztBixU302d+0fw4pPfUjPPKLLV/SNOoCunOQ8AA')">
+        <div class="detail-split__img reveal" data-lightbox="img/gallery/park_peek_1280w.webp">
+          <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAwCdASoUAAsAPzmGuVOvKSWisAgB4CcJbACdMoADfxG90j9PvJ4AAPhcd5hjRCL+mBSmrbP2MlxOBllhqtizH0q1Nb9ofmoGC2+hDHJLk1LOU24cAOyfasueOwAA')">
             <picture>
               <source type="image/webp"
-                      srcset="img/gallery/wheel_detail_320w.webp 320w, img/gallery/wheel_detail_400w.webp 400w, img/gallery/wheel_detail_800w.webp 800w, img/gallery/wheel_detail_1280w.webp 1280w"
+                      srcset="img/gallery/park_peek_320w.webp 320w, img/gallery/park_peek_400w.webp 400w, img/gallery/park_peek_800w.webp 800w, img/gallery/park_peek_1280w.webp 1280w"
                       sizes="(max-width: 768px) 100vw, 50vw">
               <img class="blur-up" loading="lazy"
-                   src="img/gallery/wheel_detail_1280w.jpg"
-                   alt="Close-up of gloss-black alloy wheel with red Brembo brake caliper visible behind the spokes"
+                   src="img/gallery/park_peek_1280w.jpg"
+                   alt="Blue Kia Sorento front peeking from behind a tree trunk with red brake caliper visible, golden hour light"
                    width="1280" height="851">
             </picture>
           </div>
@@ -1089,18 +1067,39 @@
       </div>
     </section>
 
-    <!-- ═══ S8: MOOD ═══ -->
-    <section class="mood">
-      <div class="mood__img-wrap reveal" data-lightbox="img/gallery/mood_urban_1152w.webp">
-        <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRrAAAABXRUJQVlA4IKQAAACwBQCdASoUACQAPzmAuFWvJyUjMBVdUeAnCWIAsswuc4kt6dLtvyAoMu2wjWzjbiarnR5RHwAA/tNyoRBc202PGiAwHjoYqAfuW+uffZFUt2hwujego8UDynpadaff/0xnbw22afoCYSDC0gWfwo2OppAcR9ci92deoSMNViQGQyFxzaivE3nTd99Sd+EqRWIYLtZrKT6TkEvhI+O60IjVV0AAAA==')">
+    <!-- ═══ S8: GOLDEN HOUR ═══ -->
+    <section class="section--wide">
+      <div class="panel reveal" data-lightbox="img/gallery/park_front_1280w.webp">
+        <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoUAAsAPzmGuVOvKSWisAgB4CcJbACdACL4C8j9YSo6AAD+K+zoQFY2BMv5JRLP85j9pxhQVkC7lasrB/32krYb5weQTQ8Gp5N2HQYz+Wjz7r58Xyfvu2gPCQAAAA==')">
           <picture>
             <source type="image/webp"
-                    srcset="img/gallery/mood_urban_320w.webp 320w, img/gallery/mood_urban_400w.webp 400w, img/gallery/mood_urban_800w.webp 800w, img/gallery/mood_urban_1152w.webp 1152w"
-                    sizes="(max-width: 520px) 100vw, 520px">
-            <img class="blur-up" loading="lazy"
-                 src="img/gallery/mood_urban_1152w.jpg"
-                 alt="Moody portrait shot of the Blue Kia Sorento on an overcast urban street with DRL lights glowing"
-                 width="1152" height="2048">
+                    srcset="img/gallery/park_front_320w.webp 320w, img/gallery/park_front_400w.webp 400w, img/gallery/park_front_800w.webp 800w, img/gallery/park_front_1280w.webp 1280w"
+                    sizes="100vw">
+            <img class="panel__img blur-up" loading="lazy"
+                 src="img/gallery/park_front_1280w.jpg"
+                 alt="Blue Kia Sorento front three-quarter view through pine branches in golden hour park light"
+                 width="1280" height="851">
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ S8b: THE GARAGE ═══ -->
+    <section class="section--wide" style="background:var(--surface)">
+      <div class="section" style="padding-bottom:32px">
+        <p class="section__label reveal">The Garage</p>
+        <h2 class="section__title reveal">Good Company</h2>
+      </div>
+      <div class="panel reveal" data-lightbox="img/gallery/duo_profile_1280w.webp">
+        <div class="img-wrap" style="background-image:url('data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAwAwCdASoUAAsAPzmEuVOvKKWisAgB4CcJYgC06C0Hml8AAP7lNF0JlkpcHkFAmyKnGORVg6m7wvkiGckBZrtSAt667RRtSLarFeoAAAA=')">
+          <picture>
+            <source type="image/webp"
+                    srcset="img/gallery/duo_profile_320w.webp 320w, img/gallery/duo_profile_400w.webp 400w, img/gallery/duo_profile_800w.webp 800w, img/gallery/duo_profile_1280w.webp 1280w"
+                    sizes="100vw">
+            <img class="panel__img blur-up" loading="lazy"
+                 src="img/gallery/duo_profile_1280w.jpg"
+                 alt="Yellow Chevrolet Camaro ZL1 and Blue Kia Sorento Samurai Edition side by side in profile, park setting"
+                 width="1280" height="851">
           </picture>
         </div>
       </div>
